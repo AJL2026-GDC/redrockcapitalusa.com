@@ -1,17 +1,17 @@
 {
   "source": "Freddie Mac Primary Mortgage Market Survey (PMMS)",
   "source_url": "https://www.freddiemac.com/pmms",
-  "week": "2026-10-22",
+  "week": "2026-10-29",
   "rates": [
     {
       "term": "30-year fixed",
-      "rate": 7.32,
-      "prior": 7.4
+      "rate": 7.24,
+      "prior": 7.32
     },
     {
       "term": "15-year fixed",
-      "rate": 6.68,
-      "prior": 6.71
+      "rate": 6.6,
+      "prior": 6.68
     }
   ]
 }
