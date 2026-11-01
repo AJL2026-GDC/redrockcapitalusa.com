@@ -120,6 +120,8 @@ section.block{padding-block:76px;border-top:1px solid var(--line)}
 .deal.soon{border-style:dashed;background:transparent}
 .deal .plate{height:118px;background:var(--surface-2);position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
 .deal .plate canvas{width:100%;height:100%;display:block}
+.deal .plate.photo{height:168px}
+.deal .plate.photo img{width:100%;height:100%;object-fit:cover;display:block}
 .deal .plate .st{position:absolute;top:12px;left:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink)}
 .deal .plate .st.live{background:var(--btn);border-color:var(--btn);color:var(--on-red)}
 .deal .body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
@@ -447,19 +449,19 @@ footer p{max-width:112ch;line-height:1.65}
        about:"New projects are added after each partner review. Request the list to hear first.",asset:"To be announced",seed:23}
     ],
     texas:[
-      {id:"dallas-hill",name:"Dallas Hill Villas",mkt:"Dallas, Texas · I-20 / I-45",live:true,ev:true,stage:"Under evaluation",
+      {id:"dallas-hill",img:"img/tx-dallas-hill.jpg",name:"Dallas Hill Villas",mkt:"Dallas, Texas · I-20 / I-45",live:true,ev:true,stage:"Under evaluation",
        about:"A wooded, elevated tract at the I-20 and I-45 interchange with a luxury estate-lot concept plan and survey already prepared.",
        asset:"Land · residential development",seed:31},
-      {id:"arlington-senior",name:"Arlington Senior Living",mkt:"Arlington, Texas",live:true,ev:true,stage:"Under evaluation",
+      {id:"arlington-senior",img:"img/tx-arlington-senior.jpg",name:"Arlington Senior Living",mkt:"Arlington, Texas",live:true,ev:true,stage:"Under evaluation",
        about:"An existing three-story building with a completed plan for independent living suites under its current zoning.",
        asset:"Building · senior living conversion",seed:37},
-      {id:"lakewood-villas",name:"Lakewood Village Villas",mkt:"Lakewood Village, Texas · Lewisville Lake",live:true,ev:true,stage:"Under evaluation",
+      {id:"lakewood-villas",img:"img/tx-lakewood-villas.jpg",name:"Lakewood Village Villas",mkt:"Lakewood Village, Texas · Lewisville Lake",live:true,ev:true,stage:"Under evaluation",
        about:"Wooded single-family land in a lakeside Denton County town with a villa concept plan, survey and drainage study prepared.",
        asset:"Land · residential development",seed:41},
-      {id:"swiss-nova-lake",name:"Swiss Nova Lake",mkt:"Gun Barrel City, Texas · Cedar Creek Lake",live:true,ev:true,stage:"Under evaluation",
+      {id:"swiss-nova-lake",img:"img/tx-swiss-nova-lake.jpg",name:"Swiss Nova Lake",mkt:"Gun Barrel City, Texas · Cedar Creek Lake",live:true,ev:true,stage:"Under evaluation",
        about:"A single-family community concept with a daycare site near Cedar Creek Lake, with the architect's package conveying.",
        asset:"Land · residential development",seed:43},
-      {id:"eldorado-pad",name:"Eldorado Retail Pad",mkt:"Lakewood Village, Texas",live:true,ev:true,stage:"Under evaluation",
+      {id:"eldorado-pad",img:"img/tx-eldorado-pad.jpg",name:"Eldorado Retail Pad",mkt:"Lakewood Village, Texas",live:true,ev:true,stage:"Under evaluation",
        about:"A commercial pad on W Eldorado Pkwy planned for a single-story multi-tenant retail building, as a build-to-suit.",
        asset:"Retail pad · build-to-suit",seed:47}
     ]
@@ -494,7 +496,7 @@ footer p{max-width:112ch;line-height:1.65}
   var all=DEALS.active.concat(DEALS.texas).concat(DEALS.open);
   proj.innerHTML='<option value="general">Send me the current project list</option>'+all.map(function(d){return'<option value="'+d.id+'">'+esc(d.name)+'</option>'}).join("");
   function render(list){
-    box.className='deals'+(list.length===2?' two':'');box.innerHTML=list.map(function(d){return'<article class="deal'+(d.live?"":" soon")+'"><div class="plate"><canvas data-seed="'+d.seed+'"></canvas><span class="st'+(d.live?" live":"")+'">'+esc(d.stage)+'</span></div><div class="body"><div><div class="mkt">'+esc(d.mkt)+'</div><h3>'+esc(d.name)+'</h3></div><p>'+esc(d.about)+'</p><dl><div><dt>Asset</dt><dd>'+esc(d.asset)+'</dd></div><div><dt>Size · value</dt><dd class="lock">Shared after NDA</dd></div><div><dt>Structure</dt><dd>'+(d.live?'Phased, joint venture or sale':'To be announced')+'</dd></div></dl>'+(d.ev?'<p class="ev">Listed by a third-party broker. Red Rock Capital is evaluating an acquisition with partners and does not control the property.</p>':'')+'<div class="go">'+(d.live?'<a class="btn small" href="#request" data-p="'+d.id+'" data-i="dd">Request due diligence</a><a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="meet">Meet with the owners</a>':'<a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="pkg">Notify me</a>')+'</div></div></article>'}).join("");
+    box.className='deals'+(list.length===2?' two':'');box.innerHTML=list.map(function(d){return'<article class="deal'+(d.live?"":" soon")+'"><div class="plate'+(d.img?" photo":"")+'">'+(d.img?'<img src="'+d.img+'" alt="" loading="lazy">':'<canvas data-seed="'+d.seed+'"></canvas>')+'<span class="st'+(d.live?" live":"")+'">'+esc(d.stage)+'</span></div><div class="body"><div><div class="mkt">'+esc(d.mkt)+'</div><h3>'+esc(d.name)+'</h3></div><p>'+esc(d.about)+'</p><dl><div><dt>Asset</dt><dd>'+esc(d.asset)+'</dd></div><div><dt>Size · value</dt><dd class="lock">Shared after NDA</dd></div><div><dt>Structure</dt><dd>'+(d.live?'Phased, joint venture or sale':'To be announced')+'</dd></div></dl>'+(d.ev?'<p class="ev">Listed by a third-party broker. Red Rock Capital is evaluating an acquisition with partners and does not control the property.</p>':'')+'<div class="go">'+(d.live?'<a class="btn small" href="#request" data-p="'+d.id+'" data-i="dd">Request due diligence</a><a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="meet">Meet with the owners</a>':'<a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="pkg">Notify me</a>')+'</div></div></article>'}).join("");
     box.querySelectorAll("canvas").forEach(function(c){plat(c,+c.dataset.seed,false)});
     box.querySelectorAll("[data-p]").forEach(function(a){a.addEventListener("click",function(){proj.value=a.dataset.p;setIntent(a.dataset.i||"pkg");})});
   }
