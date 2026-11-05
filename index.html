@@ -605,6 +605,8 @@ footer p{max-width:112ch;line-height:1.65}
       document.getElementById(c.dataset.k).value=v.join(", ");var p={"k-types":"type","k-sizes":"size","k-svc":"service"}[c.dataset.k];v.forEach(function(x){tg.push(p+":"+x)});});
     tg.push("investor:"+document.getElementById("r-type").value,"financing:"+document.getElementById("k-fin").value);
     document.getElementById("k-tags").value=tg.join("; ");
+    try{var fd=new FormData(form);fd.append("project_name",proj.options[proj.selectedIndex].text);
+      fetch("https://script.google.com/macros/s/AKfycbxntSXW2Miajs7fr9eC4JKhR9n7_fQhjiTgUMGjC5q8B4ArFGgH4xXGPKb3c1lutcUFKw/exec",{method:"POST",mode:"no-cors",keepalive:true,body:new URLSearchParams(fd)});}catch(_){}
     var p=proj.options[proj.selectedIndex].text,it=intent.value;
     var lbl=it==="dd"?"Due diligence request":it==="meet"?"Meeting request":"Package request";
     var extra=it==="meet"?" · "+document.getElementById("r-mode").value+" "+(dt.value||"date TBD")+" "+document.getElementById("r-time").value:"";
