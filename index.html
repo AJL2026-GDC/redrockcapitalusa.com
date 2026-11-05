@@ -154,6 +154,7 @@ section.block{padding-block:76px;border-top:1px solid var(--line)}
 /* request */
 .req{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px}
 @media (max-width:900px){.req{grid-template-columns:1fr;gap:28px}}
+@media (min-width:901px){.req .side{position:sticky;top:120px;align-self:start}}
 .req .side p{color:var(--muted);margin-top:14px;max-width:46ch}
 .req .side address{font-style:normal;color:var(--muted);margin-top:20px;line-height:1.7}
 form{background:var(--surface);border:1px solid var(--line);padding:26px clamp(16px,3vw,30px);display:grid;gap:16px}
@@ -164,6 +165,13 @@ input,select,textarea{font:inherit;font-size:15px;color:var(--ink);background:va
 textarea{min-height:96px;resize:vertical}
 .agree{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:13.5px;color:var(--ink)}
 .agree input{width:auto;margin-top:4px;accent-color:var(--red)}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px;min-width:0}
+legend{font-size:13px;font-weight:500;color:var(--muted);padding:0;margin-bottom:8px}
+.kyc-h{font-family:var(--fm,'IBM Plex Mono',monospace);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);border-top:1px solid var(--line);padding-top:14px;margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line-strong);border-radius:2px;padding:7px 11px;cursor:pointer}
+.chips input{width:auto;margin:0;accent-color:var(--red)}
+.chips label:has(input:checked){border-color:var(--red);background:var(--surface)}
 .form-msg{font-size:14px;padding:12px 14px;background:var(--brass-soft);color:var(--ink);border-left:3px solid var(--brass)}
 
 footer{background:var(--band);color:var(--band-muted);padding-block:40px 52px;font-size:12.5px}
@@ -375,22 +383,27 @@ footer p{max-width:112ch;line-height:1.65}
         <div class="side">
           <div class="eyebrow">Request a package</div>
           <h2 style="font-size:clamp(28px,3.6vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.06;margin-top:10px">Start with an NDA.</h2>
-          <p>Tell us who you are and which project interests you. We reply with a mutual NDA. Once it's signed, you get the project summary and access to the data room.</p>
+          <p>Tell us who you are, what you invest in and which project interests you. It takes about two minutes. We reply with our NDA. Once it's signed, our team follows up with the project package or a call.</p>
           <address>Red Rock Capital · Red Rock Holdings<br>121 S Orange Ave, Suite 1100N<br>Orlando, FL 32801</address>
         </div>
         <form id="reqform" action="https://formsubmit.co/aj.lash@goyaldecoster.com" method="POST">
           <input type="hidden" name="_subject" id="r-subject" value="[Capital] Package request">
-          <input type="hidden" name="_cc" value="info@redrockholdingsusa.com,freddy@goyaldecoster.com,raj@goyaldecoster.com">
+          <input type="hidden" name="_cc" value="info@redrockholdingsusa.com,freddy@goyaldecoster.com,raj@goyaldecoster.com,rawya.alrayyis@redrockcapitalusa.com">
+          <input type="hidden" name="deal_types" id="k-types"><input type="hidden" name="deal_sizes" id="k-sizes"><input type="hidden" name="services_needed" id="k-svc"><input type="hidden" name="tags" id="k-tags">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_next" value="https://redrockcapitalusa.com/?sent=1#request">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <div class="row2">
-            <label for="r-name">Full name<input id="r-name" name="name" required autocomplete="name"></label>
-            <label for="r-org">Company or family office<input id="r-org" name="organization" autocomplete="organization"></label>
+            <label for="r-org">Company or family office<input id="r-org" name="organization" required autocomplete="organization"></label>
+            <label for="r-name">Principal / contact name<input id="r-name" name="name" required autocomplete="name"></label>
           </div>
           <div class="row2">
             <label for="r-email">Email<input id="r-email" name="email" type="email" required autocomplete="email"></label>
-            <label for="r-phone">Phone<input id="r-phone" name="phone" type="tel" autocomplete="tel"></label>
+            <label for="r-phone">Phone<input id="r-phone" name="phone" type="tel" required autocomplete="tel"></label>
+          </div>
+          <div class="row2">
+            <label for="r-web">Website<input id="r-web" name="website" type="text" inputmode="url" placeholder="yourcompany.com" required></label>
+            <label for="r-loc">Based in (city, state or country)<input id="r-loc" name="location" autocomplete="address-level2"></label>
           </div>
           <div class="row2">
             <label for="r-type">I am a<select id="r-type" name="partner_type">
@@ -408,6 +421,22 @@ footer p{max-width:112ch;line-height:1.65}
               <option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option></select></label>
           </div>
           <p class="hint" id="r-meet-hint" hidden>Weekdays only. We confirm the time by email, and an NDA comes first.</p>
+          <div class="kyc-h">About your investing</div>
+          <fieldset><legend>Deal types you pursue</legend><div class="chips" data-k="k-types">
+            <label><input type="checkbox" value="Development">Development</label><label><input type="checkbox" value="Fix and flip">Fix and flip</label><label><input type="checkbox" value="Commercial">Commercial</label><label><input type="checkbox" value="Residential">Residential</label></div></fieldset>
+          <fieldset><legend>Deal size you prefer</legend><div class="chips" data-k="k-sizes">
+            <label><input type="checkbox" value="$0-500K">$0–500K</label><label><input type="checkbox" value="$500K-2M">$500K–2M</label><label><input type="checkbox" value="$2-5M">$2–5M</label><label><input type="checkbox" value="$5-20M">$5–20M</label><label><input type="checkbox" value="$20-50M">$20–50M</label><label><input type="checkbox" value="$50-100M">$50–100M</label><label><input type="checkbox" value="$100M+">$100M+</label></div></fieldset>
+          <div class="row2">
+            <label for="k-fin">Financing preference<select id="k-fin" name="financing_preference"><option>Leverage</option><option>Cash</option><option>Either</option></select></label>
+            <label for="k-exp">Experience with similar deals<select id="k-exp" name="similar_deal_experience"><option>Yes</option><option>No</option></select></label>
+          </div>
+          <div class="row2">
+            <label for="k-tx">Transactions completed, last 5 years<input id="k-tx" name="transactions_last_5_years" type="number" min="0" inputmode="numeric"></label>
+            <label for="k-ein">EIN (optional)<input id="k-ein" name="ein" autocomplete="off"></label>
+          </div>
+          <fieldset><legend>Services you may need from the Red Rock group</legend><div class="chips" data-k="k-svc">
+            <label><input type="checkbox" value="Lending">Lending</label><label><input type="checkbox" value="Architecture and design">Architecture and design</label><label><input type="checkbox" value="Grants">Grants</label><label><input type="checkbox" value="Legal">Legal</label><label><input type="checkbox" value="Title">Title</label><label><input type="checkbox" value="Sales">Sales</label><label><input type="checkbox" value="Consulting">Consulting</label></div></fieldset>
+          <label for="r-exp-d">Recent projects or experience (optional)<textarea id="r-exp-d" name="experience" style="min-height:70px" placeholder="A few recent projects, markets or partners"></textarea></label>
           <label for="r-msg">Anything we should know?<textarea id="r-msg" name="message" placeholder="Markets, timing, or the kind of structure you prefer"></textarea></label>
           <label class="agree" for="r-nda"><input type="checkbox" id="r-nda" name="nda_acknowledged" value="yes" required>I understand that project materials are shared only after a signed NDA.</label>
           <div class="form-msg" id="r-msg-out" hidden></div>
@@ -572,6 +601,10 @@ footer p{max-width:112ch;line-height:1.65}
   var form=document.getElementById("reqform"),live=true;
   if(/[?&]sent=1/.test(location.search)){var mo=document.getElementById("r-msg-out");mo.hidden=false;mo.textContent="Thank you. Your request is in. We will reply with a mutual NDA.";}
   form.addEventListener("submit",function(e){
+    var tg=[];form.querySelectorAll(".chips").forEach(function(c){var v=[].map.call(c.querySelectorAll("input:checked"),function(i){return i.value});
+      document.getElementById(c.dataset.k).value=v.join(", ");var p={"k-types":"type","k-sizes":"size","k-svc":"service"}[c.dataset.k];v.forEach(function(x){tg.push(p+":"+x)});});
+    tg.push("investor:"+document.getElementById("r-type").value,"financing:"+document.getElementById("k-fin").value);
+    document.getElementById("k-tags").value=tg.join("; ");
     var p=proj.options[proj.selectedIndex].text,it=intent.value;
     var lbl=it==="dd"?"Due diligence request":it==="meet"?"Meeting request":"Package request";
     var extra=it==="meet"?" · "+document.getElementById("r-mode").value+" "+(dt.value||"date TBD")+" "+document.getElementById("r-time").value:"";
