@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
 /* Layout: a dark "survey plat" hero band (deliberately dark in both themes), then light/dark-aware sections: approach, projects ledger, partners, request form. */
 :root{
@@ -90,6 +91,41 @@ nav.links a:hover{color:var(--band-ink)}
 .spec dd{margin:0;text-align:right;font-family:var(--f-display);font-weight:600}
 
 section.block{padding-block:76px;border-top:1px solid var(--line)}
+/* project map */
+.pmap{position:relative;background:var(--surface);border:1px solid var(--line)}
+.pmap #map{height:clamp(360px,52vw,560px);width:100%;background:var(--surface-2)}
+.pmap .ctl{position:absolute;top:12px;right:12px;z-index:500;display:flex;gap:6px}
+.pmap .ctl button{font:inherit;font-size:12.5px;font-weight:500;padding:6px 11px;background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);cursor:pointer}
+.pmap .ctl button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:var(--on-red)}
+.pmap-foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--faint);margin-top:10px}
+.pin{display:block;width:14px;height:14px;border-radius:50%;background:var(--red);border:2px solid #fff;box-shadow:0 0 0 2px rgba(155,27,27,.35)}
+.pin.tx{background:var(--brass);box-shadow:0 0 0 2px rgba(156,122,52,.35)}
+.leaflet-container{font-family:var(--f-body);font-size:13px}
+.leaflet-popup-content-wrapper{border-radius:2px;background:var(--surface);color:var(--ink);box-shadow:0 10px 24px -12px rgba(0,0,0,.4)}
+.leaflet-popup-tip{background:var(--surface)}
+.leaflet-popup-content{margin:12px 14px;line-height:1.45}
+.leaflet-popup-content .pm{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.leaflet-popup-content b{font-family:var(--f-display);font-size:14.5px;display:block;margin:2px 0 6px}
+.leaflet-popup-content a.go{color:var(--red);font-weight:600;text-decoration:none}
+.leaflet-control-attribution{font-size:10px;background:rgba(255,255,255,.75)}
+.leaflet-control-zoom a{color:#16171A}
+:root[data-theme="dark"] .leaflet-tile-pane,:root[data-theme="dark"] .leaflet-control-attribution{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .leaflet-tile-pane,:root:not([data-theme="light"]) .leaflet-control-attribution{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9)}}
+.deal.flash{outline:3px solid var(--red);outline-offset:3px}
+/* group chart */
+.chart{background:var(--surface);border:1px solid var(--line);padding:clamp(12px,2.4vw,28px)}
+.chart-img{position:relative;line-height:0}
+.chart-img img{width:100%;height:auto;display:block}
+.hots{position:absolute;inset:0}
+.hot{position:absolute;display:block;border-radius:6px}
+.hot:hover,.hot:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.hot.here{outline:3px solid var(--brass);outline-offset:2px}
+.chart-cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--faint);margin-top:14px}
+.cochips{display:none;flex-wrap:wrap;gap:8px;margin-top:14px}
+.cochip{font:inherit;font-size:13px;padding:7px 11px;border:1.5px solid var(--red);background:var(--surface);color:var(--ink);text-decoration:none}
+.cochip.coming{border-style:dashed;border-color:var(--line-strong);color:var(--muted)}
+.cochip.here{background:var(--red);border-color:var(--red);color:var(--on-red)}
+@media (max-width:700px){.cochips{display:flex}.chart-cap span.hint{display:none}}
 @media (max-width:700px){section.block{padding-block:52px}}
 .sec-head{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:end;margin-bottom:38px}
 @media (max-width:800px){.sec-head{grid-template-columns:1fr;gap:12px}}
@@ -224,6 +260,7 @@ footer p{max-width:112ch;line-height:1.65}
       <a href="#projects">Projects</a>
       <a href="#markets">Markets</a>
       <a href="#partners">Partners</a>
+      <a href="#group">The group</a>
       <a href="#leadership">Leadership</a>
       <a href="https://redrockholdingsusa.com" target="_blank" rel="noopener">Red Rock Holdings ↗</a>
     </nav>
@@ -308,6 +345,20 @@ footer p{max-width:112ch;line-height:1.65}
     </div>
   </section>
 
+  <section class="block" id="locations">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">Where the projects are</div><h2>On the map.</h2></div>
+        <p>Every current project at a glance. Select a pin to open its summary. Pins mark the nearest city or area, not the parcel; exact locations are shared after a signed NDA.</p>
+      </div>
+      <div class="pmap">
+        <div class="ctl" role="group" aria-label="Map view"><button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="fl" aria-pressed="false">Florida</button><button type="button" data-v="tx" aria-pressed="false">Texas</button></div>
+        <div id="map" role="region" aria-label="Map of project locations"></div>
+      </div>
+      <div class="pmap-foot"><span><i class="pin" style="display:inline-block;vertical-align:-2px;width:10px;height:10px"></i>&nbsp; Florida and partnership projects &nbsp;&nbsp; <i class="pin tx" style="display:inline-block;vertical-align:-2px;width:10px;height:10px"></i>&nbsp; Texas</span><span>Base map © OpenStreetMap contributors. Projects without a public location are not shown.</span></div>
+    </div>
+  </section>
+
   <section class="block" id="markets">
     <div class="wrap">
       <div class="sec-head">
@@ -342,6 +393,23 @@ footer p{max-width:112ch;line-height:1.65}
         <div><b>Developers</b><span>Joint ventures on entitled sites.</span></div>
         <div><b>Lenders</b><span>Construction and land financing.</span></div>
         <div><b>Brokers</b><span>Introductions, with cooperation agreed up front.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="group">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">The group</div><h2>Part of Red Rock Holdings.</h2></div>
+        <p>Red Rock Capital is one of nine companies in the Red Rock Holdings group. Select a company on the chart to go to its site, or to its page on the Holdings site. Solid boxes are operating today; dashed boxes are being built next.</p>
+      </div>
+      <div class="chart">
+        <div class="chart-img">
+          <img src="img/group-structure.jpg" alt="Red Rock Holdings group structure: Investments, Capital, Lending, Title, Consulting, Goyal &amp; DeCoster, Construction (GC), Architect / Design and Insurance, with the Humanitarian Alliance, World of Grace and the Human Potential Foundation" width="2400" height="1350" loading="lazy">
+          <div class="hots" id="hots"></div>
+        </div>
+        <div class="cochips" id="chips" aria-label="Companies"></div>
+        <div class="chart-cap"><span class="hint">Select a company on the chart.</span><a class="btn small ghost" href="https://redrockholdingsusa.com" target="_blank" rel="noopener">Visit Red Rock Holdings ↗</a></div>
       </div>
     </div>
   </section>
@@ -459,6 +527,7 @@ footer p{max-width:112ch;line-height:1.65}
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 (function(){
   var DEALS={
@@ -590,7 +659,7 @@ footer p{max-width:112ch;line-height:1.65}
   var all=DEALS.active.concat(DEALS.texas).concat(DEALS.florida).concat(DEALS.open);
   proj.innerHTML='<option value="general">Send me the current project list</option>'+all.map(function(d){return'<option value="'+d.id+'">'+esc(d.name)+'</option>'}).join("");
   function render(list){
-    box.className='deals'+(list.length===2?' two':'');box.innerHTML=list.map(function(d){return'<article class="deal'+(d.live?"":" soon")+'"><div class="plate'+(d.img?" photo":"")+'">'+(d.img?'<img src="'+d.img+'" alt="" loading="lazy">':'<canvas data-seed="'+d.seed+'"></canvas>')+'<span class="st'+(d.live?" live":"")+'">'+esc(d.stage)+'</span></div><div class="body"><div><div class="mkt">'+esc(d.mkt)+'</div><h3>'+esc(d.name)+'</h3></div><p>'+esc(d.about)+'</p><dl><div><dt>Asset</dt><dd>'+esc(d.asset)+'</dd></div><div><dt>Size · value</dt>'+(d.size?'<dd>'+esc(d.size)+'</dd>':'<dd class="lock">Shared after NDA</dd>')+'</div><div><dt>Structure</dt><dd>'+(d.structure?esc(d.structure):d.live?'Phased, joint venture or sale':'To be announced')+'</dd></div></dl>'+(d.ev?'<p class="ev">Listed by a third-party broker. Red Rock Capital is evaluating an acquisition with partners and does not control the property.</p>':'')+'<div class="go">'+(d.om?'<a class="btn small" href="'+d.om+'" target="_blank" rel="noopener">Offering memorandum</a>':'')+(d.live?'<a class="btn small" href="#request" data-p="'+d.id+'" data-i="dd">Request due diligence</a><a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="meet">Meet with the owners</a>':'<a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="pkg">Notify me</a>')+'</div></div></article>'}).join("");
+    box.className='deals'+(list.length===2?' two':'');box.innerHTML=list.map(function(d){return'<article class="deal'+(d.live?"":" soon")+'" id="deal-'+d.id+'"><div class="plate'+(d.img?" photo":"")+'">'+(d.img?'<img src="'+d.img+'" alt="" loading="lazy">':'<canvas data-seed="'+d.seed+'"></canvas>')+'<span class="st'+(d.live?" live":"")+'">'+esc(d.stage)+'</span></div><div class="body"><div><div class="mkt">'+esc(d.mkt)+'</div><h3>'+esc(d.name)+'</h3></div><p>'+esc(d.about)+'</p><dl><div><dt>Asset</dt><dd>'+esc(d.asset)+'</dd></div><div><dt>Size · value</dt>'+(d.size?'<dd>'+esc(d.size)+'</dd>':'<dd class="lock">Shared after NDA</dd>')+'</div><div><dt>Structure</dt><dd>'+(d.structure?esc(d.structure):d.live?'Phased, joint venture or sale':'To be announced')+'</dd></div></dl>'+(d.ev?'<p class="ev">Listed by a third-party broker. Red Rock Capital is evaluating an acquisition with partners and does not control the property.</p>':'')+'<div class="go">'+(d.om?'<a class="btn small" href="'+d.om+'" target="_blank" rel="noopener">Offering memorandum</a>':'')+(d.live?'<a class="btn small" href="#request" data-p="'+d.id+'" data-i="dd">Request due diligence</a><a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="meet">Meet with the owners</a>':'<a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="pkg">Notify me</a>')+'</div></div></article>'}).join("");
     box.querySelectorAll("canvas").forEach(function(c){plat(c,+c.dataset.seed,false)});
     box.querySelectorAll("[data-p]").forEach(function(a){a.addEventListener("click",function(){proj.value=a.dataset.p;setIntent(a.dataset.i||"pkg");})});
   }
@@ -598,6 +667,56 @@ footer p{max-width:112ch;line-height:1.65}
   tabs.forEach(function(t){document.getElementById(t[0]).addEventListener("click",function(){
     tabs.forEach(function(u){document.getElementById(u[0]).setAttribute("aria-selected",u[0]===t[0]?"true":"false")});render(DEALS[t[1]]);});});
   render(DEALS.active);
+
+  // ---- project map (Leaflet + OpenStreetMap). City-level pins only; no parcel addresses. ----
+  var LOC={"swiss-nova":[27.705,-97.372,"tx"],"royse-city":[32.975,-96.332,"tx"],"dallas-hill":[32.68,-96.74,"tx"],"arlington-senior":[32.735,-97.108,"tx"],"lakewood-villas":[33.145,-96.975,"tx"],"swiss-nova-lake":[32.334,-96.151,"tx"],"eldorado-pad":[33.14,-96.99,"tx"],"providence-reserve":[28.16,-81.6,"fl"],"st-cloud-townhomes":[28.249,-81.281,"fl"],"amnavi":[28.22,-81.26,"fl"],"lake-reedy":[28.43,-81.62,"fl"],"tomoka-farms":[29.138,-81.0,"fl"],"orlando-townhomes":[28.555,-81.37,"fl"],"ormond-beach":[29.286,-81.056,"fl"],"tampa-pasco":[28.3,-82.45,"fl"],"poinciana":[28.13,-81.47,"fl"],"haines-city":[28.107,-81.62,"fl"],"avon-park":[27.596,-81.506,"fl"],"deland":[29.028,-81.3,"fl"],"orlando-convention":[28.425,-81.46,"fl"],"aquaterra":[28.408,-81.465,"fl"],"pine-hills-duplexes":[28.585,-81.455,"fl"],"brian-paul":[36.033,-86.783,"po"],"mountain-retreat":[36.22,-81.68,"po"],"florence-resort":[43.983,-124.1,"po"],"costa-palmera":[9.73,-85.03,"po"],"alexander-resort":[40.73,23.71,"po"]};
+  function showDeal(id){
+    var key=null;Object.keys(DEALS).forEach(function(k){if(DEALS[k].some(function(d){return d.id===id}))key=k});
+    if(!key)return;var t=tabs.filter(function(t){return t[1]===key})[0];if(t)document.getElementById(t[0]).click();
+    var el=document.getElementById("deal-"+id);if(!el)return;el.scrollIntoView({block:"center"});el.classList.add("flash");setTimeout(function(){el.classList.remove("flash")},2200);
+  }
+  window.showDeal=showDeal;
+  (function(){
+    if(!window.L||!document.getElementById("map"))return;
+    var map=L.map("map",{scrollWheelZoom:false,worldCopyJump:true});
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}).addTo(map);
+    var pts=[],groups={fl:[],tx:[],all:[]};
+    all.forEach(function(d){var p=LOC[d.id];if(!p||!d.live)return;
+      var m=L.marker([p[0],p[1]],{icon:L.divIcon({className:"",html:'<span class="pin'+(p[2]==="tx"?" tx":"")+'"></span>',iconSize:[14,14],iconAnchor:[7,7],popupAnchor:[0,-8]}),title:d.name});
+      m.bindPopup('<div class="pm">'+esc(d.mkt)+'</div><b>'+esc(d.name)+'</b><a class="go" href="#deal-'+d.id+'" onclick="showDeal(\''+d.id+'\');return false">View project →</a>');
+      m.addTo(map);var ll=m.getLatLng();groups.all.push(ll);if(p[2]==="fl")groups.fl.push(ll);if(p[2]==="tx")groups.tx.push(ll);});
+    function view(v){if(!groups[v].length)return;map.fitBounds(L.latLngBounds(groups[v]),{padding:[36,36],maxZoom:v==="all"?4:8});
+      document.querySelectorAll(".pmap .ctl button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===v?"true":"false")});}
+    document.querySelectorAll(".pmap .ctl button").forEach(function(b){b.addEventListener("click",function(){view(b.dataset.v)})});
+    view("all");
+    map.on("click",function(){map.scrollWheelZoom.enable()});map.on("mouseout",function(){map.scrollWheelZoom.disable()});
+  })();
+
+  // ---- group chart: hotspots over the 9 company boxes + the Holdings box (positions in the chart's 1280x720 frame) ----
+  (function(){
+    var H="https://redrockholdingsusa.com";
+    var CO=[
+      {id:"investments",t:"Red Rock Investments",href:H+"/#group",live:true},
+      {id:"capital",t:"Red Rock Capital (this site)",href:"#projects",live:true,here:true},
+      {id:"lending",t:"Red Rock Lending",href:"https://redrocklendingusa.com",live:true,ext:true},
+      {id:"title",t:"Red Rock Title",href:H+"/#group",live:false},
+      {id:"consulting",t:"Red Rock Consulting",href:H+"/#group",live:true},
+      {id:"gdc",t:"Goyal & DeCoster",href:"https://www.goyaldecoster.com",live:true,ext:true},
+      {id:"construction",t:"Red Rock Construction (GC)",href:H+"/#group",live:false},
+      {id:"architecture",t:"Red Rock Architect / Design",href:H+"/#group",live:false},
+      {id:"insurance",t:"Red Rock Insurance",href:H+"/#group",live:false}];
+    var hots=document.getElementById("hots"),chips=document.getElementById("chips");if(!hots)return;
+    function link(c,x,y,w,h){var a=document.createElement("a");a.className="hot"+(c.here?" here":"");a.href=c.href;a.title=c.t;a.setAttribute("aria-label",c.t);
+      if(!c.here){a.target="_blank";a.rel="noopener"}
+      a.style.left=(x/1280*100)+"%";a.style.top=(y/720*100)+"%";a.style.width=(w/1280*100)+"%";a.style.height=(h/720*100)+"%";hots.appendChild(a);}
+    link({id:"holdings",t:"Red Rock Holdings",href:H},656,104,212,134);
+    CO.forEach(function(c,i){link(c,86+124*i,303,112,154);
+      var k=document.createElement("a");k.className="cochip"+(c.live?"":" coming")+(c.here?" here":"");k.href=c.href;if(!c.here){k.target="_blank";k.rel="noopener"}
+      k.textContent=c.id==="gdc"?"Goyal & DeCoster":c.t.replace("Red Rock ","").replace(" (this site)","");chips.appendChild(k);});
+    link({id:"ha",t:"The Humanitarian Alliance",href:H},86,552,382,96);
+    link({id:"wog",t:"World of Grace",href:H},483,552,348,96);
+    link({id:"hpf",t:"Human Potential Foundation",href:H},846,552,348,96);
+  })();
   var hero=document.getElementById("plat");plat(hero,5,true);
   var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(function(){plat(hero,5,true);box.querySelectorAll("canvas").forEach(function(c){plat(c,+c.dataset.seed,false)})},150)});
 
