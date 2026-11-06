@@ -109,8 +109,8 @@ section.block{padding-block:76px;border-top:1px solid var(--line)}
 .leaflet-popup-content a.go{color:var(--red);font-weight:600;text-decoration:none}
 .leaflet-control-attribution{font-size:10px;background:rgba(255,255,255,.75)}
 .leaflet-control-zoom a{color:#16171A}
-:root[data-theme="dark"] .leaflet-tile-pane,:root[data-theme="dark"] .leaflet-control-attribution{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .leaflet-tile-pane,:root:not([data-theme="light"]) .leaflet-control-attribution{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9)}}
+:root[data-theme="dark"] .leaflet-control-attribution,:root[data-theme="dark"] .leaflet-control-zoom a{background:rgba(23,24,27,.85);color:#EDEBE7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .leaflet-control-attribution,:root:not([data-theme="light"]) .leaflet-control-zoom a{background:rgba(23,24,27,.85);color:#EDEBE7}}
 .deal.flash{outline:3px solid var(--red);outline-offset:3px}
 /* group chart */
 .chart{background:var(--surface);border:1px solid var(--line);padding:clamp(12px,2.4vw,28px)}
@@ -355,7 +355,7 @@ footer p{max-width:112ch;line-height:1.65}
         <div class="ctl" role="group" aria-label="Map view"><button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="fl" aria-pressed="false">Florida</button><button type="button" data-v="tx" aria-pressed="false">Texas</button></div>
         <div id="map" role="region" aria-label="Map of project locations"></div>
       </div>
-      <div class="pmap-foot"><span><i class="pin" style="display:inline-block;vertical-align:-2px;width:10px;height:10px"></i>&nbsp; Florida and partnership projects &nbsp;&nbsp; <i class="pin tx" style="display:inline-block;vertical-align:-2px;width:10px;height:10px"></i>&nbsp; Texas</span><span>Base map © OpenStreetMap contributors. Projects without a public location are not shown.</span></div>
+      <div class="pmap-foot"><span><i class="pin" style="display:inline-block;vertical-align:-2px;width:10px;height:10px"></i>&nbsp; Florida and partnership projects &nbsp;&nbsp; <i class="pin tx" style="display:inline-block;vertical-align:-2px;width:10px;height:10px"></i>&nbsp; Texas</span><span>Base map © Esri and OpenStreetMap contributors. Projects without a public location are not shown.</span></div>
     </div>
   </section>
 
@@ -679,7 +679,17 @@ footer p{max-width:112ch;line-height:1.65}
   (function(){
     if(!window.L||!document.getElementById("map"))return;
     var map=L.map("map",{scrollWheelZoom:false,worldCopyJump:true});
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}).addTo(map);
+    // Esri basemaps (English place names worldwide): World Street Map in light mode, Dark Gray canvas + labels in dark mode.
+    var ATTR='Tiles &copy; Esri &mdash; Esri, HERE, Garmin, OpenStreetMap contributors';
+    function isDark(){var t=document.documentElement.getAttribute("data-theme");if(t)return t==="dark";return !!(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)}
+    var layers=[];function base(){layers.forEach(function(l){map.removeLayer(l)});layers=[];
+      var E="https://server.arcgisonline.com/ArcGIS/rest/services/";
+      if(isDark()){layers.push(L.tileLayer(E+"Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:ATTR}),L.tileLayer(E+"Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,pane:"shadowPane"}));}
+      else layers.push(L.tileLayer(E+"World_Street_Map/MapServer/tile/{z}/{y}/{x}",{maxZoom:18,attribution:ATTR}));
+      layers.forEach(function(l){l.addTo(map)});}
+    base();
+    if(window.matchMedia)matchMedia("(prefers-color-scheme: dark)").addEventListener("change",base);
+    new MutationObserver(base).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
     var pts=[],groups={fl:[],tx:[],all:[]};
     all.forEach(function(d){var p=LOC[d.id];if(!p||!d.live)return;
       var m=L.marker([p[0],p[1]],{icon:L.divIcon({className:"",html:'<span class="pin'+(p[2]==="tx"?" tx":"")+'"></span>',iconSize:[14,14],iconAnchor:[7,7],popupAnchor:[0,-8]}),title:d.name});
