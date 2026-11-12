@@ -246,6 +246,63 @@ footer p{max-width:112ch;line-height:1.65}
 @media (max-width:640px){.meet{grid-template-columns:1fr}}
 .meet[hidden]{display:none}
 .hint{font-size:12.5px;color:var(--faint);margin-top:-4px}
+
+/* ---- offering summaries (Nov 12) ---- */
+.deal dd.cap{font-family:var(--f-display);font-weight:600}
+.deal dd.cap small{display:block;font-family:var(--f-body);font-weight:400;color:var(--faint);font-size:12px}
+.btn.om{background:transparent;color:var(--red);border-color:var(--red)}
+.btn.om:hover{background:var(--red);color:var(--on-red)}
+dialog#om{border:0;padding:0;background:var(--surface);color:var(--ink);width:min(860px,calc(100vw - 24px));max-height:calc(100vh - 24px);box-shadow:0 30px 80px -20px rgba(0,0,0,.6);overflow:auto}
+dialog#om::backdrop{background:rgba(8,9,10,.72);backdrop-filter:blur(2px)}
+.om-head{background:var(--band);color:var(--band-ink);padding:18px clamp(18px,4vw,36px);display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:3px solid var(--band-red)}
+.om-head .logo{width:104px;height:auto;display:block}
+.om-head .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--band-muted);text-align:right;padding-right:40px}
+@media (max-width:560px){.om-head .k{display:none}}
+.om-head .k b{display:block;font-family:var(--f-display);font-size:13px;letter-spacing:.02em;color:var(--band-ink);margin-top:2px}
+.om-x{position:absolute;top:10px;right:10px;font:inherit;font-size:22px;line-height:1;width:36px;height:36px;border:0;background:transparent;color:var(--band-ink);cursor:pointer}
+.om-body{padding:clamp(20px,4vw,36px)}
+.om-body .mkt{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.04em;color:var(--faint)}
+.om-body h3{font-size:clamp(24px,3.4vw,32px);font-weight:700;line-height:1.1;margin:4px 0 2px}
+.om-body .tag{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line-strong);margin:8px 0 0}
+.om-body .tag.live{background:var(--btn);border-color:var(--btn);color:var(--on-red)}
+.om-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;margin-top:22px}
+@media (max-width:680px){.om-grid{grid-template-columns:1fr}}
+.om-h{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.om-body ul.b{margin:0;padding:0;list-style:none}
+.om-body ul.b li{position:relative;padding:5px 0 5px 16px;font-size:14.5px;color:var(--ink);border-bottom:1px solid var(--line)}
+.om-body ul.b li::before{content:"";position:absolute;left:0;top:13px;width:6px;height:6px;background:var(--red)}
+.om-cap{margin:0;display:grid;gap:0}
+.om-cap div{padding:9px 0;border-bottom:1px solid var(--line)}
+.om-cap dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.om-cap dd{margin:2px 0 0;font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.2}
+.om-cap dd small{display:block;font-family:var(--f-body);font-weight:400;font-size:12.5px;color:var(--muted);margin-top:2px}
+.om-cap dd.gap{color:var(--brass);font-weight:600;font-size:15px}
+.om-svc{margin-top:26px;padding-top:18px;border-top:1px solid var(--line-strong)}
+.om-svc p{font-size:14px;color:var(--muted);margin:0 0 10px}
+.om-svc ul{margin:0 0 14px;padding-left:18px;font-size:14px;color:var(--ink);columns:2;column-gap:28px}
+@media (max-width:680px){.om-svc ul{columns:1}}
+.om-svc ul li{break-inside:avoid;padding:2px 0}
+.logos{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.logos .lg{background:#fff;border:1px solid var(--line);padding:8px 16px;height:58px;display:flex;align-items:center;gap:10px;color:#16171A;font-family:var(--f-display);font-weight:600;font-size:13px;text-decoration:none}
+.logos .lg img{height:40px;width:auto;display:block}
+.logos .lg.rrc{background:var(--band);border-color:var(--band);color:var(--band-ink)}
+.logos .lg.rrc .logo{height:40px;width:auto}
+.om-tx{margin-top:16px;padding:12px 14px;background:var(--surface-2);font-size:13px;color:var(--muted);display:flex;gap:12px;align-items:center}
+.om-tx img{height:34px;width:auto;flex:none}
+.om-foot{margin-top:24px;padding-top:18px;border-top:1px solid var(--line-strong);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.om-foot .sp{flex:1}
+.om-legal{font-size:12px;color:var(--faint);margin-top:16px;line-height:1.5}
+.om-print{display:none}
+@media print{
+  body>*{display:none!important}
+  dialog#om{display:block!important;position:static;width:auto;max-height:none;box-shadow:none;color:#111;background:#fff}
+  dialog#om::backdrop{display:none}
+  .om-x,.om-foot .btn{display:none!important}
+  .om-head{background:#111!important;color:#F2EFEA!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .om-print{display:block;font-size:12px;color:#555;margin-top:10px}
+  .om-body{color:#111}.om-body ul.b li{color:#111}.om-cap dd{color:#111}
+  @page{margin:12mm}
+}
 </style>
 
 </head>
@@ -324,7 +381,7 @@ footer p{max-width:112ch;line-height:1.65}
     <div class="wrap">
       <div class="sec-head">
         <div><div class="eyebrow">Projects</div><h2>Current projects.</h2></div>
-        <p>Summaries only. Size, valuation and structure terms are shared after a signed NDA. Requesting a package doesn't commit you to anything.</p>
+        <p>Every project has a short offering summary: what it is and the capital it needs. Plans, financials and the data room are shared after a signed NDA. Requesting a package doesn't commit you to anything.</p>
       </div>
       <p class="looks-h">What our partners look for</p>
       <ul class="looks">
@@ -332,7 +389,7 @@ footer p{max-width:112ch;line-height:1.65}
         <li><b>Value created in the ground</b>Buying well, then entitlements and permits that turn raw land into a buildable site.</li>
         <li><b>A choice of structure</b>Phased participation, a joint venture, or a sale of the entitled site.</li>
         <li><b>Texas and Florida growth corridors</b>Land, mixed-use and development positions in both states.</li>
-        <li><b>A clear process</b>NDA first, then the project summary, then the data room and a call with our team.</li>
+        <li><b>A clear process</b>Read the offering summary, then NDA, then the data room and a call with our team.</li>
         <li><b>A full group behind every project</b>Brokerage, consulting and development teams from Red Rock Holdings, with project reviews every 15 days.</li>
       </ul>
       <div class="tabs" role="tablist" aria-label="Project lists">
@@ -527,6 +584,11 @@ footer p{max-width:112ch;line-height:1.65}
   </div>
 </footer>
 
+
+<dialog id="om" aria-labelledby="om-title">
+  <div class="om-head"><span id="om-logo"></span><div class="k">Offering summary<b>Red Rock Capital · Red Rock Holdings</b></div><button class="om-x" type="button" aria-label="Close" data-close>&times;</button></div>
+  <div class="om-body" id="om-body"></div>
+</dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 (function(){
@@ -659,14 +721,14 @@ footer p{max-width:112ch;line-height:1.65}
   var all=DEALS.active.concat(DEALS.texas).concat(DEALS.florida).concat(DEALS.open);
   proj.innerHTML='<option value="general">Send me the current project list</option>'+all.map(function(d){return'<option value="'+d.id+'">'+esc(d.name)+'</option>'}).join("");
   function render(list){
-    box.className='deals'+(list.length===2?' two':'');box.innerHTML=list.map(function(d){return'<article class="deal'+(d.live?"":" soon")+'" id="deal-'+d.id+'"><div class="plate'+(d.img?" photo":"")+'">'+(d.img?'<img src="'+d.img+'" alt="" loading="lazy">':'<canvas data-seed="'+d.seed+'"></canvas>')+'<span class="st'+(d.live?" live":"")+'">'+esc(d.stage)+'</span></div><div class="body"><div><div class="mkt">'+esc(d.mkt)+'</div><h3>'+esc(d.name)+'</h3></div><p>'+esc(d.about)+'</p><dl><div><dt>Asset</dt><dd>'+esc(d.asset)+'</dd></div><div><dt>Size · value</dt>'+(d.size?'<dd>'+esc(d.size)+'</dd>':'<dd class="lock">Shared after NDA</dd>')+'</div><div><dt>Structure</dt><dd>'+(d.structure?esc(d.structure):d.live?'Phased, joint venture or sale':'To be announced')+'</dd></div></dl>'+(d.ev?'<p class="ev">Listed by a third-party broker. Red Rock Capital is evaluating an acquisition with partners and does not control the property.</p>':'')+'<div class="go">'+(d.om?'<a class="btn small" href="'+d.om+'" target="_blank" rel="noopener">Offering memorandum</a>':'')+(d.live?'<a class="btn small" href="#request" data-p="'+d.id+'" data-i="dd">Request due diligence</a><a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="meet">Meet with the owners</a>':'<a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="pkg">Notify me</a>')+'</div></div></article>'}).join("");
+    box.className='deals'+(list.length===2?' two':'');box.innerHTML=list.map(function(d){return'<article class="deal'+(d.live?"":" soon")+'" id="deal-'+d.id+'"><div class="plate'+(d.img?" photo":"")+'">'+(d.img?'<img src="'+d.img+'" alt="" loading="lazy">':'<canvas data-seed="'+d.seed+'"></canvas>')+'<span class="st'+(d.live?" live":"")+'">'+esc(d.stage)+'</span></div><div class="body"><div><div class="mkt">'+esc(d.mkt)+'</div><h3>'+esc(d.name)+'</h3></div><p>'+esc(d.about)+'</p><dl><div><dt>Asset</dt><dd>'+esc(d.asset)+'</dd></div><div><dt>Capital</dt>'+(capLine(d)||(d.size?'<dd>'+esc(d.size)+'</dd>':'<dd class="lock">Shared after NDA</dd>'))+'</div><div><dt>Structure</dt><dd>'+(d.structure?esc(d.structure):d.live?'Phased, joint venture or sale':'To be announced')+'</dd></div></dl>'+(d.ev?'<p class="ev">Listed by a third-party broker. Red Rock Capital is evaluating an acquisition with partners and does not control the property.</p>':'')+'<div class="go">'+(SUM[d.id]?'<a class="btn small om" href="#om-'+d.id+'" data-om="'+d.id+'">Offering summary</a>':'')+(d.om?'<a class="btn small" href="'+d.om+'" target="_blank" rel="noopener">Offering memorandum</a>':'')+(d.live?'<a class="btn small" href="#request" data-p="'+d.id+'" data-i="dd">Request due diligence</a><a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="meet">Meet with the owners</a>':'<a class="btn small ghost" href="#request" data-p="'+d.id+'" data-i="pkg">Notify me</a>')+'</div></div></article>'}).join("");
     box.querySelectorAll("canvas").forEach(function(c){plat(c,+c.dataset.seed,false)});
     box.querySelectorAll("[data-p]").forEach(function(a){a.addEventListener("click",function(){proj.value=a.dataset.p;setIntent(a.dataset.i||"pkg");})});
+    box.querySelectorAll("[data-om]").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();openOM(a.dataset.om)})});
   }
   var tabs=[["tab-active","active"],["tab-texas","texas"],["tab-florida","florida"],["tab-open","open"]];
   tabs.forEach(function(t){document.getElementById(t[0]).addEventListener("click",function(){
     tabs.forEach(function(u){document.getElementById(u[0]).setAttribute("aria-selected",u[0]===t[0]?"true":"false")});render(DEALS[t[1]]);});});
-  render(DEALS.active);
 
   // ---- project map (Leaflet + OpenStreetMap). City-level pins only; no parcel addresses. ----
   var LOC={"swiss-nova":[27.705,-97.372,"tx"],"royse-city":[32.975,-96.332,"tx"],"dallas-hill":[32.68,-96.74,"tx"],"arlington-senior":[32.735,-97.108,"tx"],"lakewood-villas":[33.145,-96.975,"tx"],"swiss-nova-lake":[32.334,-96.151,"tx"],"eldorado-pad":[33.14,-96.99,"tx"],"providence-reserve":[28.16,-81.6,"fl"],"st-cloud-townhomes":[28.249,-81.281,"fl"],"amnavi":[28.22,-81.26,"fl"],"lake-reedy":[28.43,-81.62,"fl"],"tomoka-farms":[29.138,-81.0,"fl"],"orlando-townhomes":[28.555,-81.37,"fl"],"ormond-beach":[29.286,-81.056,"fl"],"tampa-pasco":[28.3,-82.45,"fl"],"poinciana":[28.13,-81.47,"fl"],"haines-city":[28.107,-81.62,"fl"],"avon-park":[27.596,-81.506,"fl"],"deland":[29.028,-81.3,"fl"],"orlando-convention":[28.425,-81.46,"fl"],"aquaterra":[28.408,-81.465,"fl"],"pine-hills-duplexes":[28.585,-81.455,"fl"],"brian-paul":[36.033,-86.783,"po"],"mountain-retreat":[36.22,-81.68,"po"],"florence-resort":[43.983,-124.1,"po"],"costa-palmera":[9.73,-85.03,"po"],"alexander-resort":[40.73,23.71,"po"]};
@@ -676,6 +738,101 @@ footer p{max-width:112ch;line-height:1.65}
     var el=document.getElementById("deal-"+id);if(!el)return;el.scrollIntoView({block:"center"});el.classList.add("flash");setTimeout(function(){el.classList.remove("flash")},2200);
   }
   window.showDeal=showDeal;
+
+  // ---- Offering summaries (Nov 12). Figures as stated by the sponsor or listing broker; nothing modeled here. ----
+  var GAP="Being confirmed with the project owner";
+  var SUM={
+    "swiss-nova":{what:["About 18 acres on South Padre Island Drive in Corpus Christi, the former Sunrise Mall site, owned by a Red Rock group company","Planned as a walkable district: a residential tower, apartments, a hotel, a retail plaza and restaurant pads with structured parking","In design and entitlements; public incentives are being pursued"],
+      cap:[["Structure","Co-GP, joint venture or developer buyout","Capital figures shared after NDA"]]},
+    "royse-city":{what:["55 acres with Interstate 30 frontage in Royse City, east of Dallas, being acquired with partners","Planned mixed-use program: a hotel, multifamily, townhomes and commercial frontage","Concept design and early site studies prepared; vertical permits estimated at 12 to 24 months (sponsor)"],
+      cap:[["Land acquisition","$10.0M","sponsor's land basis"],["Seed capital","$1M","seed-stage partner entry; terms shared on request"]]},
+    "dallas-hill":{what:["±42.51 wooded, elevated acres at the I-20 / I-45 interchange on the Dallas city line","ARK Architects concept plan for 31 estate lots, most an acre or larger, on a private gated loop; ALTA survey complete","Proposed rezoning from agricultural to residential; frontage also supports industrial, hospitality and mixed-use"],
+      cap:[["Asking price","$6,000,000","per the listing broker, Capstone Commercial"],["Development capital","To be modeled with partners",""]],tx:true},
+    "arlington-senior":{what:["A ±75,520 SF three-story building on ±3.35 acres in Arlington, 0.7 miles from I-30 and the stadium district","ARK Architects plan for 99 independent-living suites under the existing CC zoning; no rezoning per the architect","Built 1982, renovated 2020; 183 planned parking spaces against 129 required"],
+      cap:[["Asking price","$25,000,000","per the listing broker, Capstone Commercial"],["Conversion capital","To be modeled with partners",""]],tx:true},
+    "lakewood-villas":{what:["±19.55 wooded acres on W Eldorado Pkwy in Lakewood Village, a lakeside Denton County town on Lewisville Lake","ARK Architects concept for 24 villa lots on a private cul-de-sac street with a park, pond and open space","Boundary survey, site plan, drainage study and renderings prepared by the seller"],
+      cap:[["Asking price","$9,000,000","per the listing broker, Capstone Commercial"],["Development capital","To be modeled with partners",""]],tx:true},
+    "swiss-nova-lake":{what:["±14.63 acres on SH 334 in Gun Barrel City, the retail hub of Cedar Creek Lake, about 57 miles from Dallas","The sale includes ARK Architects' concept package: 72 single-family homes of 1,500 to 2,000 SF and a daycare site on about an acre","Works out to about $25,000 per planned lot, per the listing"],
+      cap:[["Asking price","$1,800,000","per the listing, Capstone Commercial"],["Development capital","To be modeled with partners",""]],tx:true},
+    "eldorado-pad":{what:["A ±1.62-acre commercial pad on W Eldorado Pkwy in Lakewood Village, 21,617+ vehicles per day (2025, per listing)","Planned ±16,500 SF single-story multi-tenant retail building with 78 parking spaces; conceptual design and survey drawn","Offered as a ground lease or build-to-suit; Red Rock Capital's interest is to buy the pad, build and lease"],
+      cap:[["Land","$1,200,000","indicated by the listing broker, Capstone Commercial"],["Build-to-suit capital","To be modeled with partners",""]],tx:true},
+    "pine-hills-duplexes":{what:["Four duplexes, eight 2-bed / 1-bath units, on N Pine Hills Rd in Orlando, offered off market as one package","6,304 SF in total; six of eight units leased","Sold as-is; a full offering memorandum is available on the card"],
+      cap:[["Asking price","$1,000,000","for the package of four duplexes"]]},
+    "providence-reserve":{what:["±81.46 acres in Davenport, Polk County, across the street from a premier golf course, with two access easements","Master-planned layout of 228 single-family lots (7,216 and 9,200 SF) with 3-bed / 2-bath homes of 1,750 and 2,500 SF","About 8 acres of parks and open space; about 39.85 acres of jurisdictional wetlands on the site map"],
+      cap:[["Capital needed",GAP,"land price and development budget to follow"]],gap:true},
+    "st-cloud-townhomes":{what:["A conceptual 40-lot townhome community in St. Cloud with a central landscaped water body and internal 25-foot roads","Two lot types: 50' × 80' (4,000 SF) and 46' × 80' (3,680 SF)","Subject to survey, engineering, entitlements and approvals"],
+      cap:[["Capital needed",GAP,"land price and development budget to follow"]],gap:true},
+    "amnavi":{what:["A 240-townhome community on about 29 acres in St. Cloud, Osceola County","Business plan: entitle, develop, construct and sell in phases over about 3 years","Sponsor cost breakdown: land $9.0M, soft costs $2.0M, horizontal $14.0M, vertical $45.0M"],
+      cap:[["Total project cost","$70.0M","sponsor estimate"],["Land","$9.0M","within the total"]]},
+    "lake-reedy":{what:["±176 acres on Lake Reedy in the Horizon West / Disney area, about 17 minutes to Walt Disney World, with direct SR 429 access","300 to 400 proposed estate, luxury and lakefront homes and custom lots; about 50% conservation and open space","Clubhouse with resort pool, fitness, tennis and pickleball"],
+      cap:[["Capital needed",GAP,"land price and development budget to follow"]],gap:true},
+    "tomoka-farms":{what:["±61.48 acres in Port Orange planned for 61 gated estate homes around a signature retention pond with fountains","Homes of about 5,000 SF, 5 bedrooms / 5.5 baths, 3-car garages","Clubhouse, pool, tennis and pickleball"],
+      cap:[["Capital needed",GAP,"land price and development budget to follow"]],gap:true},
+    "orlando-townhomes":{what:["A conceptual 50-unit townhome community on about 8.8 gross acres in Orange County","Site plan by the project architect includes a pool and cabana","Conceptual and subject to approvals"],
+      cap:[["Capital needed",GAP,"land price and development budget to follow"]],gap:true},
+    "ormond-beach":{what:["An age-restricted (55+) concrete mid-rise condominium community in Ormond Beach: 280 units in 10 buildings in the master plan","The first 28-unit building is complete and sold out; 252 units in 9 buildings remain","Three phases of 4 / 3 / 3 buildings; about 4 buildings have infrastructure and pad readiness"],
+      cap:[["Land basis","$9.0M","sponsor figure"],["Build-out capital","To be modeled with partners","sponsor shows $200/SF build cost"]]},
+    "tampa-pasco":{what:["About 300 acres in Pasco County planned as a master-planned mixed-use community","Program: 350 multifamily units, 400 townhomes and 104,000 SF of commercial; a 104-townhome parcel already identified","Phaseable plan with for-sale, multifamily and commercial components"],
+      cap:[["Target land acquisition","$16.0M","sponsor target"],["Total development cost","$220.0M","sponsor estimate: land $16.0M, horizontal $50.0M, vertical and soft $170.0M"]]},
+    "poinciana":{what:["A 350+ acre off-market land assemblage opportunity in Poinciana, Central Florida","Suited to a large-scale residential or mixed-use vision, subject to approvals","Long-term, flexible development potential"],
+      cap:[["Capital needed",GAP,"land price to follow"]],gap:true},
+    "haines-city":{what:["120 lakeside acres in Haines City planned as an RV and manufactured-home community","600 to 800 target units, 50% RV and 50% manufactured homes, delivered in phases","Preliminary project model from the sponsor"],
+      cap:[["Indicative capital stack","$40M to $45M","sponsor model"],["Equity sought","$12M to $15M","limited-partner equity, per the sponsor"]]},
+    "avon-park":{what:["±7.7 acres with frontage on US Highway 27 in Avon Park","About 19 retail and commercial shops in two buildings on the frontage; about 123 apartments in three 4-story buildings to the rear","About 368 surface parking spaces"],
+      cap:[["Capital needed",GAP,"land price and development budget to follow"]],gap:true},
+    "deland":{what:["33 acres in DeLand, Volusia County, with industrial uplands at one end and residential uplands at the other, separated by a central wetland corridor","Industrial concept: three single-story flex buildings, 85,729 SF combined, 207 parking spaces (7+ acres)","Residential concept: 27 single-family homesites on about 6 acres"],
+      cap:[["Capital needed",GAP,"land price and development budget to follow"]],gap:true},
+    "orlando-convention":{what:["A Class A mixed-use concept on a 1,934,500 SF site in the Orlando Convention Center area","3,615,000 SF gross building area: medical center and retail (700 units), hotel (640 keys), condo hotel (570), office and sky business club (340), multifamily (1,010)","7,075 parking stalls; sponsor-provided preliminary assumptions"],
+      cap:[["Total capitalization","$1.598B","sponsor estimate"],["Partner entry","Shared after NDA",""]]},
+    "aquaterra":{what:["A concept for twin 45-story resort towers rising from an artificial lagoon near the SeaWorld entrance in Orlando","2,500 hotel suites across the two towers, up to 270 underwater rooms, an underwater restaurant","Use of capital: land, approvals, design and vertical development; the financial model is to be set in a term sheet"],
+      cap:[["Concept scale","$700M","sponsor figure"],["Partner entry","Strategic investor / developer partner sought","terms shared after NDA"]]},
+    "brian-paul":{what:["A luxury lifestyle hotel, wellness community and live music venue on about 20 hilltop acres in Brentwood, near Nashville","190 hotel rooms and suites, 24 hotel condos, 28 garden homes, 51 wellness spa condos, 27 upper village condos","Entitlements, design and the project team are being assembled"],
+      cap:[["Total project cost","$437.3M","sponsor estimate"],["Partner entry","Lead co-GP / strategic capital partner","terms shared after NDA"]]},
+    "mountain-retreat":{what:["An existing 230+ acre resort campus about 7.5 miles from Boone in western North Carolina","218,000 SF built in three main buildings: 98+ hotel rooms, 118+ mini suites and condos, a ~13,000 SF restaurant; new roofs 2022 to 2023","Adaptive-reuse options: resort, wellness retreat, senior living, residential or training campus"],
+      cap:[["Asking price","$22M","per the seller's marketing materials"],["Seller financing","Possible, subject to terms",""]]},
+    "florence-resort":{what:["A coastal golf resort and multi-parcel development opportunity in Florence, Oregon, with ocean, dune and fairway frontage","Golf course, clubhouse and resort setting near Old Town and the Siuslaw River","Hospitality, residential and mixed-use options, subject to approvals"],
+      cap:[["Capital needed",GAP,"asking price to follow"]],gap:true},
+    "costa-palmera":{what:["About 252 acres of Pacific-coast, ocean-view land at Playa Tambor on Costa Rica's Nicoya Peninsula (one source page says 52 acres; to be verified)","Residential lots with condominium potential and a separate beachfront beach-club parcel","Local Tambor airstrip nearby"],
+      cap:[["Capital needed",GAP,"asking price to follow"]],gap:true},
+    "alexander-resort":{what:["A 14.20-acre (57,000 m²) beachfront site at Asprovalta, about 60 minutes from Thessaloniki airport","A 300 to 350-key five-star resort hotel with a theme park, water park, residences and a sports complex; about 371,355 SF of allowable building area","99-year lease (50 + 49) with municipal support for licensing"],
+      cap:[["Estimated project budget","€50M","sponsor estimate"]]},
+    "sports-complex":{what:["A 6.6-acre sports campus: 8 outdoor soccer fields (11v11, 9v9, 7v7), 3 indoor courts, padel and pickleball","A 30-room hotel (Victory Suites), education center, two rooftop restaurants, recovery and spa center, 170+ parking spaces","Year-round operation; location shared after NDA"],
+      cap:[["Capital needed",GAP,"budget to follow"]],gap:true},
+    "sand-hill":{what:["A 140-unit townhome and home community on ±15.69 acres; location shared after NDA","Average unit 1,800 SF, 252,000 SF planned in total; entitle, develop, build and sell over about 2 years","Sponsor cost breakdown: land $5.00M, horizontal $10.00M, vertical $22.00M"],
+      cap:[["Base project cost","$37.27M","sponsor estimate"],["Land","$5.00M","within the total"]]}
+  };
+  function capLine(d){var s=SUM[d.id];if(!s)return null;var c=s.cap[0];return s.gap?'<dd class="lock">Figures on request</dd>':'<dd class="cap">'+esc(c[1])+'<small>'+esc(c[0])+'</small></dd>'}
+  var om=document.getElementById("om"),omBody=document.getElementById("om-body");
+  var brandLogo=document.querySelector(".brand .logo");if(brandLogo)document.getElementById("om-logo").appendChild(brandLogo.cloneNode(true));
+  function findDeal(id){var r=null;Object.keys(DEALS).forEach(function(k){DEALS[k].forEach(function(d){if(d.id===id)r=d})});return r}
+  function openOM(id){
+    var d=findDeal(id),s=SUM[id];if(!d||!s)return;
+    var h='<div class="mkt">'+esc(d.mkt)+'</div><h3>'+esc(d.name)+'</h3><span class="tag'+(d.live?" live":"")+'">'+esc(d.stage)+'</span>';
+    h+='<div class="om-grid"><div><p class="om-h">What it is</p><ul class="b">'+s.what.map(function(b){return'<li>'+esc(b)+'</li>'}).join("")+'</ul></div>';
+    h+='<div><p class="om-h">Capital needed</p><dl class="om-cap">'+s.cap.map(function(c){return'<div><dt>'+esc(c[0])+'</dt><dd'+(c[1]===GAP?' class="gap"':'')+'>'+esc(c[1])+(c[2]?'<small>'+esc(c[2])+'</small>':'')+'</dd></div>'}).join("")+'</dl>';
+    h+='<p class="om-legal" style="margin-top:10px">Figures as stated by the project sponsor or listing broker; preliminary and subject to due diligence.</p></div></div>';
+    h+='<div class="om-svc"><p class="om-h">What the group can provide</p><ul><li>Financing and loan options through Red Rock Lending</li><li>Brokerage, sales and leasing through Goyal &amp; DeCoster</li><li>Consulting, underwriting and project oversight</li><li>Development and project management with partners</li></ul>';
+    h+='<div class="logos"><span class="lg rrc">'+(brandLogo?brandLogo.outerHTML:'')+'</span><a class="lg" href="https://goyaldecoster.com" target="_blank" rel="noopener"><img src="img/logo-goyal-decoster.png" alt="Goyal &amp; DeCoster"></a><a class="lg" href="https://redrocklendingusa.com" target="_blank" rel="noopener"><img src="img/logo-red-rock-lending.png" alt="Red Rock Lending"></a>'+(s.tx?'<span class="lg"><img src="img/logo-capstone.png" alt="">Capstone Commercial Real Estate Group</span>':'')+'</div>';
+    if(s.tx)h+='<div class="om-tx"><img src="img/logo-capstone.png" alt=""><span>This Texas property is listed for sale by Capstone Commercial Real Estate Group, Dallas. Red Rock Capital works in partnership with Capstone Commercial in Texas; it is not the listing broker and does not control the property. Real estate brokerage in Texas is provided through brokers licensed there.</span></div>';
+    h+='</div><div class="om-foot"><a class="btn" href="#request" data-p="'+d.id+'" data-i="dd" data-close>Request due diligence for more information</a><a class="btn ghost" href="#request" data-p="'+d.id+'" data-i="meet" data-close>Meet with the owners</a><span class="sp"></span><button class="btn ghost small" type="button" id="om-print-btn">Print / save PDF</button></div>';
+    h+='<p class="om-legal">Not an offer to sell, or a solicitation of an offer to buy, any security or interest in any project. Participation, if any, is offered only to qualified parties through definitive documents after a signed non-disclosure agreement. Descriptions and figures are preliminary and may change. Confidential · Not for distribution.</p>';
+    h+='<p class="om-print">Red Rock Capital · redrockcapitalusa.com · '+esc(d.name)+' · '+new Date().toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})+'</p>';
+    omBody.innerHTML=h;
+    omBody.querySelectorAll("[data-p]").forEach(function(a){a.addEventListener("click",function(){proj.value=a.dataset.p;setIntent(a.dataset.i||"pkg");})});
+    omBody.querySelectorAll("[data-close]").forEach(function(a){a.addEventListener("click",function(){om.close()})});
+    document.getElementById("om-print-btn").addEventListener("click",function(){window.print()});
+    if(history.replaceState)history.replaceState(null,"","#om-"+id);
+    if(typeof om.showModal==="function"){if(!om.open)om.showModal()}else om.setAttribute("open","");
+    omBody.scrollTop=0;om.scrollTop=0;
+  }
+  om.addEventListener("click",function(e){if(e.target===om)om.close()});
+  om.addEventListener("close",function(){if(location.hash.indexOf("#om-")===0&&history.replaceState)history.replaceState(null,"","#projects")});
+  document.querySelector("#om .om-x").addEventListener("click",function(){om.close()});
+  window.openOM=openOM;
+  function hashOM(){var m=/^#om-([a-z0-9-]+)$/.exec(location.hash);if(m&&SUM[m[1]]){showDeal(m[1]);openOM(m[1]);}}
+  window.addEventListener("hashchange",hashOM);
+  render(DEALS.active);
+  setTimeout(hashOM,50);
   (function(){
     if(!window.L||!document.getElementById("map"))return;
     var map=L.map("map",{scrollWheelZoom:false,worldCopyJump:true});
@@ -781,6 +938,6 @@ footer p{max-width:112ch;line-height:1.65}
 })();
 </script>
 
-<!-- kyc-intake v1.1 -->
+<!-- kyc-intake v1.1 · offering summaries v1 -->
 </body>
 </html>
